@@ -10,3 +10,5 @@ npm run dev
 ```
 
 Production-проверка: `npx next build --webpack`.
+
+Deployment: Vercel production from `main`.
