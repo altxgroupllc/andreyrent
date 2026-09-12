@@ -1,5 +1,4 @@
 import * as React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { business } from "@/content/business";
 import { offices } from "@/content/locations";
@@ -51,8 +50,7 @@ export function SiteFooter({
           <p className="text-[12px]" style={{ color: "rgba(255,255,255,.4)" }}>
             © {business.foundedYear}–2026 «{business.legalName}». {labels.rights}
           </p>
-          <div className="flex items-center gap-2 text-[11.5px]" style={{ color: "rgba(255,255,255,.48)" }}>
-            <Image src="/brand/altx-studio-mark.png" alt="" width={26} height={23} className="h-[20px] w-auto opacity-80" />
+          <div className="text-[11.5px]" style={{ color: "rgba(255,255,255,.48)" }}>
             <span>Created by <strong className="font-600" style={{ color: "rgba(255,255,255,.78)" }}>ALTX Studio</strong></span>
           </div>
         </div>
