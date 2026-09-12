@@ -1,0 +1,201 @@
+project: andrei-motorbike-rent
+version: 1
+approved: true
+approved_direction: "C3 — Precision Rental"
+approved_on: "2026-09-12"
+brand_brief: ".altx/brand-brief.yaml"   # brand_mode: evolve — logo and core palette locked
+supersedes: ["C2 — Precision Rental (refined into C3)"]
+
+strategy:
+  business_goal: >
+    Move a tourist in Pattaya from "I need a bike" to a WhatsApp message carrying the right
+    model, an honest price for their dates and understood conditions.
+  primary_user: >
+    Short-stay tourist or long-stay resident on a phone, who already knows their dates and
+    budget but not the fleet.
+  primary_action: "Choose a bike for a duration, then message on WhatsApp."
+  metaphor: >
+    A precise rental counter, not a control panel and not a brochure. Calm, fast, exact.
+  defining_fact: >
+    The monthly tariff is roughly 3x cheaper per day than the daily one. Therefore no price
+    may ever appear without the duration that earns it. See content/source-conflicts.md C-01.
+
+composition:
+  archetype: "intent-first chooser + vehicle-first result list"
+  hero_model: >
+    No banner. The hero is the three-step chooser itself: what you need, for how long,
+    where to deliver. Results sit beside it on desktop, below it on mobile.
+  grid: "desktop 392px chooser + fluid results, max width 1320px; single column below 1024px"
+  density: "high information density with 8px rhythm; row height ~96px"
+  rhythm: "8px base; 20/16/12/8 radius scale carries the hierarchy"
+  asymmetry: "fixed-width chooser against a fluid result column; never a centred symmetric page"
+  step_flow: >
+    Steps 1-3 are joined by a 1px vertical connector with 24px numbered markers.
+    No chevrons, no progress bar, no wizard chrome.
+
+typography:
+  heading: "Onest 600"
+  body: "Onest 400/500"
+  mono: "none — mono is deliberately absent from ordinary UI labels"
+  character: >
+    One modern Cyrillic-native UI face. Precision comes from tabular numerals, not from a
+    terminal typeface. Sentence case; uppercase only inside the locked logo asset.
+  scale_notes: >
+    H1 31/600 (line-height 1.15, tracking -0.015em) · section 17-19/600 · body 14.5-15/400-500 ·
+    metadata 12.5/400 · row price 20/600 · panel price 34/600 · day count 26/600.
+  numerals: "font-variant-numeric: tabular-nums on every figure that can change"
+
+iconography:
+  family: "custom domain set (src/components/design-lab/icons.tsx -> to be promoted to production)"
+  members: ["Helmet", "KeyFob", "Deposit", "Scooter", "Passport", "Engine", "Pin", "Clock", "WhatsApp", "LineApp"]
+  weight: "stroke 1.6, round caps and joins"
+  sizes: "13px inline attributes · 16px inclusions · 18px specimen"
+  custom_icon_rule: >
+    Lucide is permitted ONLY inside borrowed primitives (command palette, calendar chevrons).
+    It must never become the product's icon voice. New glyphs are drawn to match stroke 1.6.
+
+geometry:
+  radius: "container 20 · card 16 · control 12 · button 12 · badge 8"
+  border_language: "1px hairline rgba(17,17,17,0.08); selected 1px rgba(17,17,17,0.55)"
+  card_language: >
+    Flat white surfaces on a warm neutral page. Shadow only to signal selection
+    (0 1px 3px rgba(17,17,17,.07)) or elevation of an overlay. No glass, no gradients.
+  pill_rule: "Pills only where the shape carries meaning — step markers and segmented indicators."
+
+surfaces:
+  page: "#F5F5F3"
+  surface: "#FFFFFF"
+  surface_sunken: "#F0F0ED"
+  image_plate: "#EEEEEA"
+  dark: "#151515"
+  text: "#171717"
+  muted: "#6B6B68"
+  faint: "#9A9A96"
+  border: "rgba(17,17,17,0.08)"
+  border_strong: "rgba(17,17,17,0.16)"
+  border_selected: "rgba(17,17,17,0.55)"
+  glass: false
+  gradient_policy: "none — no gradients anywhere, including overlays"
+  backdrop_blur: "permitted only on the sticky header and sheet headers, 12px, over a solid tint"
+
+brand_accent:
+  yellow: "#FDDD00"           # sampled from the logo asset, 11 209 px — not chosen
+  yellow_text_color: "#171717"  # black on yellow ~13:1; yellow on white ~1.2:1 and forbidden
+  yellow_allowed_for:
+    - "selected chooser option"
+    - "active duration preset"
+    - "selection edge on a vehicle row (3px left rule)"
+    - "primary action inside the quick preview"
+    - "the live result summary block"
+  yellow_forbidden_for:
+    - "savings badges (neutral chip instead — 28 yellow chips destroy the accent)"
+    - "availability status"
+    - "row or card backgrounds"
+    - "text on white"
+    - "large decorative areas"
+  red: "#E2231A"              # selective high-priority booking action only
+  green: "#25D366"            # WhatsApp only
+  line_green: "#06C755"       # LINE only
+  green_rule: "green is a channel mark, never a UI accent or success colour"
+
+imagery:
+  strategy: >
+    Real published photography of the actual fleet (199 assets catalogued in content/assets.json).
+    The motorcycle is the primary object of the interface.
+  crop_language: >
+    object-contain on a neutral plate so no bike is ever cropped through its wheels.
+    Row 84x63 on phones, 96x72 above; quick preview 16:10; detail 16:10.
+  generation_policy: >
+    Never generate or source stock photography of rental vehicles. A model with no published
+    photo renders a labelled empty state (NoPhoto), not a substitute image.
+
+pricing_hierarchy:
+  rule: >
+    The dominant figure follows the decision being made.
+  one_day: "daily rate is dominant (20/600); caption 'за один день'"
+  multi_day: >
+    total for the period is dominant (20/600 in a row, 34/600 in a panel);
+    the daily rate drops to the secondary line beside a neutral savings chip.
+  alignment: >
+    Title and total share a baseline; attributes and the daily rate share the one below.
+    This is what keeps long model names readable at 390px.
+  never: "a 'from X' price detached from the duration that earns it"
+  animation: "every dependent figure animates through the same spring — no text flashing"
+
+vehicle_row:
+  height: "~96px, two aligned baselines"
+  image: "84x63 phone / 96x72 desktop, object-contain, plate #EEEEEA, radius 12"
+  attributes: >
+    Read off published specs: engine size, Keyless, ABS, use case.
+    Two above 640px, one below. A clipped half-word is worse than showing less.
+  availability_rule: >
+    'Под заказ' outranks specs — it takes the chip slot and the attribute list shortens.
+  hover: "translateY(-1px), image scale 1.03, border darkens"
+
+selected_state:
+  edge: "3px yellow left rule, animated on scaleY"
+  border: "rgba(17,17,17,0.55)"
+  shadow: "0 1px 3px rgba(17,17,17,.07)"
+  persistence: >
+    A dark chosen-bike bar carries model, total for the period, 'Детали' and the WhatsApp
+    action. Bottom-anchored on mobile, bottom-right card on desktop.
+
+quick_preview:
+  purpose: "an intermediate step between list row and full detail, so nothing is chosen blind"
+  desktop: "420px centred card, list visible and dimmed behind"
+  mobile: "bottom sheet at ~61% viewport height with a grab handle"
+  contents: "5-frame gallery, three attributes, price hierarchy, deposit, delivery"
+  exits: "'Выбрать этот байк' (selects) or 'Подробнее' (full panel)"
+  rule: "must preserve context and feel instant; never replaces the full detail panel"
+
+motion:
+  character: "restrained, high damping, no bounce, fast settling — motion reports state"
+  primary_engine: "motion (motion/react)"
+  secondary_engine: "none"
+  durations: "controls 200ms · cards 240ms · panels 380-450ms"
+  easing: "cubic-bezier(0.22, 0.61, 0.36, 1)"
+  springs:
+    ui: "stiffness 420, damping 40, mass 0.8"
+    panel: "stiffness 260, damping 34, mass 0.9"
+    numeric: "stiffness 320, damping 38, mass 0.6"
+  hover_limits: "translateY max -1px; scale max 1.01"
+  list_behaviour: >
+    LayoutGroup + AnimatePresence: surviving rows travel to new positions, removed rows
+    fade at 0.985 scale. Spatial continuity is preserved when filtering.
+  signature_interaction: >
+    Changing the duration re-prices the whole fleet while every figure walks to its new
+    value — the same number moving, never a different number appearing.
+  reduced_motion: true
+
+mobile:
+  principle: "mobile-first; desktop is the phone column plus a reference pane, not the reverse"
+  navigation: "bottom tab bar, 48px targets, layoutId indicator"
+  controls: "stepper buttons 44px; no interactive target below 28px"
+  safe_area: "env(safe-area-inset-bottom) honoured on every bottom-anchored surface"
+  sheets: "bottom sheets with grab handles; panels enter from bottom on phone, right on desktop"
+  images: "first four rows priority-loaded; the rest lazy"
+
+sources:
+  foundation: ["@shadcn"]
+  composition: []
+  motion: ["motion"]
+  typography: ["Onest via next/font/google"]
+  rejected:
+    - "@bundui — several items ship registryDependencies pointing at http://localhost:3000/r/…"
+    - "@kokonutui/card-stack — fintech demo content and external Unsplash references"
+    - "@react-bits/CardSwap — pulls GSAP for a decorative effect with no product job"
+    - "@animate-ui toggle-group — does not forward `style` to its button and depends on external theme tokens"
+
+forbidden_patterns:
+  - "centred SaaS hero with headline, paragraph and two buttons"
+  - "gradients of any kind, including overlay scrims on this direction"
+  - "glassmorphism as a visual theme"
+  - "mono typography for ordinary UI labels"
+  - "uppercase as a styling device outside the logo"
+  - "yellow as a surface, or yellow text on white"
+  - "red or green used for anything other than booking emphasis and messaging channels"
+  - "savings or status expressed in brand yellow"
+  - "generated or stock photography of the rental fleet"
+  - "bare 'from X ฿' prices detached from a duration"
+  - "bouncy or decorative motion; anything that does not report state"
+  - "business facts written into JSX instead of the content layer"

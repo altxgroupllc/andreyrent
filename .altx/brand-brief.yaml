@@ -1,0 +1,225 @@
+project: andrei-motorbike-rent
+
+brand_mode: evolve
+approved_for_design_lab: true
+
+brand_core:
+  logo:
+    preserve: true
+    locked: true
+    instruction: >
+      Keep the existing Andrei Motorbike Rent logo as-is.
+      Do not redesign, simplify, reinterpret, redraw or replace it.
+      The surrounding digital layout may change completely,
+      but the logo itself remains the existing brand asset.
+
+  colors:
+    preserve: true
+    locked: true
+
+    core:
+      black:
+        role:
+          - primary brand foundation
+          - dark navigation
+          - high-contrast surfaces
+
+      yellow:
+        role:
+          - primary brand accent
+          - active states
+          - important actions
+          - highlights
+          - continuity with physical signage and vehicle stickers
+
+      white:
+        role:
+          - light content surfaces
+          - text on dark backgrounds
+          - visual breathing room
+
+    secondary:
+      red:
+        role:
+          - selective high-priority booking actions
+          - urgent/high-emphasis actions only
+        constraint: >
+          Red is secondary and must not compete with yellow
+          as the main brand accent.
+
+      green:
+        role:
+          - WhatsApp
+          - LINE
+          - messaging/contact channels only
+
+design_freedom:
+  locked:
+    - existing logo
+    - black/yellow/white core brand palette
+
+  may_redesign_completely:
+    - information architecture
+    - website architecture
+    - navigation
+    - typography
+    - catalogue UX
+    - vehicle cards
+    - vehicle detail pages
+    - pricing presentation
+    - booking flow
+    - filters
+    - search
+    - mobile navigation
+    - layout
+    - grid
+    - spacing
+    - geometry
+    - iconography
+    - photography treatment
+    - motion system
+    - backgrounds
+    - content hierarchy
+    - calls to action
+    - responsive behaviour
+
+digital_direction:
+  mix:
+    rental_app: 70
+    motorsport_urban: 30
+
+  rental_app:
+    principles:
+      - fast vehicle discovery
+      - catalogue-first product experience
+      - clear prices and rental periods
+      - dates and duration close to inventory
+      - easy vehicle comparison
+      - low-friction booking path
+      - strong mobile usability
+      - app-like interaction
+      - inventory as a primary product surface
+
+  motorsport_urban:
+    principles:
+      - retain real motorcycle-rental energy
+      - strong vehicle imagery
+      - confident typography
+      - physical and street character
+      - sharper interaction details
+      - energetic but controlled motion
+      - avoid sterile SaaS appearance
+
+desired_feeling:
+  - modern
+  - fast
+  - practical
+  - trustworthy
+  - motorcycle-focused
+  - local Pattaya rental business
+  - product-like rather than brochure-like
+  - visually distinctive
+  - easy to use on mobile
+
+brand_reality:
+  existing_identity_is_real: true
+  physical_business_matters: true
+  instruction: >
+    The physical rental office, signage, existing logo,
+    black/yellow visual language and motorcycle context define the brand.
+    The old website layout does not define the brand.
+
+do_not_preserve_from_old_site:
+  - existing page layouts
+  - existing navigation architecture
+  - old catalogue grid
+  - old WordPress-style cards
+  - sidebar widgets
+  - old typography
+  - old button geometry
+  - glow effects
+  - SEO-first above-the-fold structure
+  - excessive navigation density
+  - existing spacing system
+  - existing mobile layout
+
+avoid:
+  - luxury rebrand
+  - generic SaaS aesthetic
+  - fintech aesthetic
+  - blue-purple AI gradients
+  - cyberpunk aesthetic
+  - excessive glassmorphism
+  - default shadcn appearance
+  - generic centered SaaS hero
+  - default bento-grid marketing layout
+  - repeated identical rounded cards
+  - fake premium minimalism
+  - replacing motorcycle personality with neutral corporate UI
+  - inventing a new brand
+  - changing the logo
+  - changing the core brand colors
+
+design_lab:
+  approved: true
+  number_of_directions: 3
+
+  shared_constraints:
+    - existing logo
+    - black/yellow/white core palette
+    - actual business content
+    - actual vehicle imagery
+    - actual Pattaya rental context
+    - 70 percent Rental App
+    - 30 percent Motorsport Urban
+
+  rule: >
+    Create three materially different DIGITAL PRODUCT DIRECTIONS
+    for one existing brand.
+    Do not create three different brands.
+    Variation must come from UX architecture, composition,
+    catalogue model, typography, geometry, density, motion,
+    navigation, pricing interaction and booking model.
+
+  direction_targets:
+    A:
+      working_name: Inventory First
+      emphasis: >
+        Strongest Rental App direction.
+        Make dates, rental duration, inventory and price
+        central to the experience.
+
+    B:
+      working_name: Moto Discovery
+      emphasis: >
+        Stronger vehicle imagery and motorcycle character.
+        More expressive editorial/product presentation,
+        while keeping booking and price easy to understand.
+
+    C:
+      working_name: Fast Local Rental
+      emphasis: >
+        Highly practical mobile-first rental utility.
+        Fast path from rental duration and requirements
+        to suitable vehicles, price, delivery and booking.
+
+  must_vary:
+    - hero composition
+    - discovery model
+    - catalogue composition
+    - navigation model
+    - typography
+    - iconography
+    - geometry
+    - density
+    - card construction
+    - motion language
+    - booking CTA model
+    - pricing interaction
+    - mobile interaction
+
+  stop_condition: >
+    After rebuilding and browser-testing all three new directions,
+    stop for human review.
+    Do not choose a winner and do not propagate any direction
+    into the production website without explicit approval.

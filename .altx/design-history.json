@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "projects": [
+    {
+      "project": "andrei-motorbike-rent",
+      "approved_on": "2026-09-12",
+      "direction": "C3 — Precision Rental",
+      "domain": "vehicle rental · Pattaya, Thailand",
+      "brand_mode": "evolve",
+      "hero_model": "intent-first chooser as hero, no banner",
+      "layout": "fixed chooser column + fluid vehicle-first result list",
+      "discovery_model": "three-step scenario chooser resolving to a re-priced list",
+      "heading_family": "Onest",
+      "body_family": "Onest",
+      "mono_family": "none",
+      "type_character": "single modern Cyrillic UI face, sentence case, tabular numerals",
+      "icon_family": "custom domain set, stroke 1.6",
+      "radius": "20/16/12/8 scale",
+      "surface": "warm neutral #F5F5F3 page, flat white cards, hairline borders",
+      "accent": "#FDDD00 restricted to selection, active duration and primary action",
+      "imagery": "real fleet photography, object-contain on neutral plates",
+      "motion": "restrained high-damping spring; layout reordering; numeric springs",
+      "signature": "duration change re-prices the fleet with every figure walking to its new value",
+      "price_model": "duration-bound hierarchy — total dominant on multi-day, daily rate on one day",
+      "notable_constraints": [
+        "logo and black/yellow/white core locked by client brand brief",
+        "yellow sampled from the logo asset rather than chosen",
+        "no gradients, no glass, no mono UI labels"
+      ]
+    }
+  ],
+  "anti_repeat_notes": [
+    "Do not reuse the intent-first chooser-as-hero model on the next project without a distinct justification.",
+    "Onest + custom 1.6-stroke domain icons + 20/16/12/8 radius + flat warm-neutral surfaces is now a used combination.",
+    "The duration-bound price hierarchy and the numeric-spring signature belong to this project.",
+    "Avoid repeating the bottom-tab-bar + quick-preview + chosen-item-bar triad as a default mobile pattern."
+  ]
+}
