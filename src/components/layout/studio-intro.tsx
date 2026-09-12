@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import * as React from "react";
 
 export function StudioIntro() {
@@ -31,14 +30,6 @@ export function StudioIntro() {
       aria-label="Created by ALTX Studio"
     >
       <div className="studio-intro-lockup">
-        <Image
-          src="/brand/altx-studio-mark.png"
-          alt="ALTX Studio"
-          width={150}
-          height={134}
-          priority
-          className="studio-intro-logo"
-        />
         <p className="studio-intro-credit">Created by <strong>ALTX Studio</strong></p>
         <div className="studio-intro-progress" aria-hidden="true">
           <span />
