@@ -106,23 +106,22 @@ export function QuickPreview({
             <div className="text-right text-[12.5px]" style={{ color: t.muted }}>
               <div>{labels.deposit} {vehicle.depositLabel ?? "—"}</div>
               <div className="mt-0.5">
-                {/* C-04: zone prices are disputed, so delivery cost is never printed here */}
                 {rental.zone === "office" ? "Самовывоз, 0 ฿" : labels.delivery}
               </div>
             </div>
           </div>
 
-          <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
+          <div className="mt-4 grid grid-cols-[minmax(0,1fr)_auto] gap-2">
             <Link
               href={withRental(path.booking(vehicle.slug, locale), rental)}
-              className="py-3 text-[14.5px] font-600"
+              className="flex min-h-11 items-center justify-center px-4 py-3 text-center text-[14.5px] font-600"
               style={{ background: t.yellow, color: t.text, borderRadius: r.button }}
             >
               {primaryCta(vehicle, "Продолжить к бронированию")}
             </Link>
             <Link
               href={withRental(vehiclePath(vehicle.category, vehicle.slug, locale), rental)}
-              className="px-4 py-3 text-[14.5px] font-500"
+              className="flex min-h-11 items-center justify-center px-4 py-3 text-[14.5px] font-500"
               style={{ background: t.surfaceSunken, color: t.text, borderRadius: r.button }}
             >
               {labels.details}

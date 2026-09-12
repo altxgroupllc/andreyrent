@@ -132,11 +132,11 @@ export function BookingExperience({ vehicle, locale }: { vehicle: VehicleListIte
   const [currency, setCurrency] = React.useState<Currency>("THB");
   const [depositAccepted, setDepositAccepted] = React.useState(false);
   const [contract, setContract] = React.useState(false);
-  const [final, setFinal] = React.useState(false);
   const [client, setClient] = React.useState({
     surname: "", name: "", passport: "", expiry: "", birth: "", citizenship: "", whatsapp: "", telegram: "", line: "", contact: "WhatsApp", hotel: "", room: "",
   });
-  const stageRef = React.useRef<HTMLElement>(null);
+  const bookingAnchorRef = React.useRef<HTMLDivElement>(null);
+  const previousStepRef = React.useRef(step);
 
   const q = quote(vehicle, rental.days);
   const total = q?.total ?? 0;
@@ -150,10 +150,7 @@ export function BookingExperience({ vehicle, locale }: { vehicle: VehicleListIte
   const next = () => {
     if (!canContinue) return;
     if (step < steps.length - 1) setStep((current) => current + 1);
-    else {
-      setContract(true);
-      window.setTimeout(() => setFinal(true), 850);
-    }
+    else setContract(true);
   };
   const previous = () => setStep((current) => Math.max(0, current - 1));
   const updateClient = (key: keyof typeof client) => (value: string) => setClient((current) => ({ ...current, [key]: value }));
@@ -163,24 +160,20 @@ export function BookingExperience({ vehicle, locale }: { vehicle: VehicleListIte
   };
 
   React.useEffect(() => {
-    stageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (previousStepRef.current === step) return;
+    previousStepRef.current = step;
+    if (!window.matchMedia("(max-width: 767px)").matches) return;
+    const anchor = bookingAnchorRef.current;
+    if (!anchor) return;
+    const top = anchor.getBoundingClientRect().top + window.scrollY - 64;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.max(0, top), behavior: reduceMotion ? "auto" : "smooth" });
   }, [step]);
 
   if (contract) {
     return (
       <div className="mx-auto max-w-[720px] px-4 py-10 sm:py-16">
-        {!final ? (
-          <Card className="p-7 text-center sm:p-10">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center" style={{ background: t.surfaceSunken, borderRadius: r.card }}>
-              <Passport size={26} />
-            </div>
-            <h1 className="mt-5 text-[26px] font-600 tracking-[-.02em]">Оформляем договор</h1>
-            <p className="mx-auto mt-2 max-w-[34ch] text-[14px] leading-6" style={{ color: t.muted }}>Собираем демонстрационную заявку. В реальном сервисе здесь будет проверка данных оператором.</p>
-            <div className="mx-auto mt-7 h-1.5 w-40 overflow-hidden" style={{ background: t.surfaceSunken, borderRadius: 999 }}><div className="h-full animate-pulse" style={{ width: "68%", background: t.yellow }} /></div>
-          </Card>
-        ) : (
-          <FinalScreen vehicle={vehicle} days={rental.days} total={total} bookingNumber={bookingNumber} locale={locale} />
-        )}
+        <FinalScreen vehicle={vehicle} days={rental.days} total={total} bookingNumber={bookingNumber} locale={locale} />
       </div>
     );
   }
@@ -201,7 +194,7 @@ export function BookingExperience({ vehicle, locale }: { vehicle: VehicleListIte
         <Link href={vehiclePath(vehicle.category, vehicle.slug, locale)} className="text-[13px] font-500" style={{ color: t.muted }}>← К карточке транспорта</Link>
         <Chip tone="outline">Прототип оформления</Chip>
       </div>
-      <div className="mb-7 flex flex-wrap items-center gap-2">
+      <div ref={bookingAnchorRef} className="mb-7 flex flex-wrap items-center gap-2">
         <span className="mr-1 text-[12px] font-600 uppercase tracking-[.1em]" style={{ color: t.faint }}>Что бронируем?</span>
         <Link href={path.bikes(locale)} className="min-h-9 px-3 py-2 text-[13px] font-500" style={{ background: vehicle.category === "motorbike" ? t.dark : t.surface, color: vehicle.category === "motorbike" ? "#fff" : t.text, border: `1px solid ${vehicle.category === "motorbike" ? t.dark : t.border}`, borderRadius: r.button }}>Байк</Link>
         <Link href={path.cars(locale)} className="min-h-9 px-3 py-2 text-[13px] font-500" style={{ background: vehicle.category === "auto" ? t.dark : t.surface, color: vehicle.category === "auto" ? "#fff" : t.text, border: `1px solid ${vehicle.category === "auto" ? t.dark : t.border}`, borderRadius: r.button }}>Автомобиль</Link>
@@ -217,7 +210,7 @@ export function BookingExperience({ vehicle, locale }: { vehicle: VehicleListIte
             })}
           </ol>
         </aside>
-        <main ref={stageRef} className="scroll-mt-24">
+        <main>
           <div className="mb-5 flex items-center justify-between"><div><p className="text-[12px] font-600 uppercase tracking-[.1em]" style={{ color: t.faint }}>Шаг {step + 1} из {steps.length}</p><h1 className="mt-1 text-[28px] font-600 tracking-[-.025em]">{steps[step]}</h1></div><span className="text-[13px]" style={{ color: t.muted }}>{displayName(vehicle)}</span></div>
           <Card className="p-4 sm:p-6">{content}</Card>
           <div className="mt-4 flex items-center justify-between gap-3">

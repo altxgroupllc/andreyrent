@@ -13,9 +13,9 @@ import { t, r } from "@/components/system/tokens";
 import { path, vehiclePath } from "@/content/routes";
 
 export const metadata: Metadata = {
-  title: "Аренда байков и скутеров в Паттайе",
+  title: "Аренда байков, авто и скутеров в Паттайе",
   description:
-    "Подберите байк в Паттайе за три шага: что нужно, на сколько и куда привезти. Честная цена за выбранный срок, залог деньгами, паспорт остаётся у вас.",
+    "Подберите транспорт в Паттайе: байк, скутер или автомобиль. Посмотрите стоимость на свой срок и пройдите пошаговое оформление заявки.",
   alternates: { canonical: "/ru" },
 };
 
@@ -40,22 +40,24 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
   return (
     <div className="mx-auto max-w-[1320px] px-4 pb-28 pt-6 lg:pb-12">
-      <section className="grid gap-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(360px,.65fr)] lg:gap-8">
-        <div className="py-5 sm:py-10 lg:py-14">
-          <Chip>Аренда транспорта в Паттайе</Chip>
-          <h1 className="mt-5 max-w-[13ch] text-[38px] font-600 leading-[1.04] tracking-[-.04em] sm:text-[52px]">Понятная аренда — от выбора до QR-заявки.</h1>
-          <p className="mt-5 max-w-[52ch] text-[15px] leading-6 sm:text-[16px]" style={{ color: t.muted }}>Сначала выберите байк или автомобиль и посмотрите цену на свой срок. Затем пройдите оформление по шагам — без регистрации и без реальной оплаты в прототипе.</p>
-          <div className="mt-7 flex flex-wrap gap-2.5">
-            <Link href="#подбор" className="min-h-11 px-4 py-3 text-[14px] font-600" style={{ background: t.yellow, color: t.text, borderRadius: r.button }}>Подобрать транспорт</Link>
-            <Link href={path.howItWorks(locale)} className="min-h-11 px-4 py-3 text-[14px] font-500" style={{ border: `1px solid ${t.borderStrong}`, borderRadius: r.button }}>Как проходит аренда</Link>
+      <section className="home-hero">
+        <div className="relative z-[1] grid gap-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(360px,.65fr)] lg:gap-8">
+          <div className="py-5 sm:py-10 lg:py-14">
+            <Chip>Аренда транспорта в Паттайе</Chip>
+            <h1 className="mt-5 max-w-[13ch] text-[38px] font-600 leading-[1.04] tracking-[-.04em] sm:text-[52px]">Понятная аренда — от выбора до QR-заявки.</h1>
+            <p className="mt-5 max-w-[52ch] text-[15px] leading-6 sm:text-[16px]" style={{ color: t.muted }}>Выберите байк или автомобиль, посмотрите стоимость на свой срок и пройдите оформление по шагам. Без регистрации и без реальной оплаты в прототипе.</p>
+            <div className="mt-7 flex flex-wrap gap-2.5">
+              <Link href="#подбор" className="min-h-11 px-4 py-3 text-[14px] font-600" style={{ background: t.yellow, color: t.text, borderRadius: r.button }}>Подобрать транспорт</Link>
+              <Link href={path.howItWorks(locale)} className="min-h-11 px-4 py-3 text-[14px] font-500" style={{ border: `1px solid ${t.borderStrong}`, borderRadius: r.button }}>Как проходит аренда</Link>
+            </div>
           </div>
+          <Card className="overflow-hidden p-4 sm:p-5" style={{ background: t.dark, color: "#fff", borderColor: t.dark }}>
+            <p className="text-[12px] font-600 uppercase tracking-[.12em]" style={{ color: "rgba(255,255,255,.55)" }}>Оформление по шагам</p>
+            <ol className="mt-6 space-y-4">
+              {[["01", "Подберите технику", "Сравните модели и цену на свой срок."], ["02", "Заполните заявку", "Паспорт, контакты и способ залога — в понятной очередности."], ["03", "Получите QR", "В финале будет номер заявки и связь с менеджером."]].map(([n, title, text]) => <li key={n} className="grid grid-cols-[32px_1fr] gap-3"><span className="text-[12px] font-600" style={{ color: t.yellow }}>{n}</span><div><strong className="text-[15px] font-500">{title}</strong><p className="mt-1 text-[13px] leading-5" style={{ color: "rgba(255,255,255,.62)" }}>{text}</p></div></li>)}
+            </ol>
+          </Card>
         </div>
-        <Card className="overflow-hidden p-4 sm:p-5" style={{ background: t.dark, color: "#fff", borderColor: t.dark }}>
-          <p className="text-[12px] font-600 uppercase tracking-[.12em]" style={{ color: "rgba(255,255,255,.55)" }}>Оформление по шагам</p>
-          <ol className="mt-6 space-y-4">
-            {[["01", "Подберите технику", "Сравните модели и цену на свой срок."], ["02", "Заполните заявку", "Паспорт, контакты и способ залога — в понятной очередности."], ["03", "Получите QR", "В финале будет номер заявки и связь с менеджером."]].map(([n, title, text]) => <li key={n} className="grid grid-cols-[32px_1fr] gap-3"><span className="text-[12px] font-600" style={{ color: t.yellow }}>{n}</span><div><strong className="text-[15px] font-500">{title}</strong><p className="mt-1 text-[13px] leading-5" style={{ color: "rgba(255,255,255,.62)" }}>{text}</p></div></li>)}
-          </ol>
-        </Card>
       </section>
 
       <section className="mt-12" aria-labelledby="featured-title">
