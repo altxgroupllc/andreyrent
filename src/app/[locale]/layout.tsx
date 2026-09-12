@@ -30,7 +30,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   ];
 
   return (
-    <div className="flex min-h-screen flex-col" style={{ background: t.page, color: t.text }}>
+    <div className="flex min-h-screen flex-col" style={{ color: t.text }}>
       <SiteHeader
         locale={locale}
         brandLine={d.brandLine}

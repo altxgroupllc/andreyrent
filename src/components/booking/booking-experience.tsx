@@ -3,6 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, Chip } from "@/components/system/surfaces";
 import { Pressable, PressableLink } from "@/components/system/pressable";
@@ -124,6 +125,7 @@ function Summary({ vehicle, days, startDate, total, deposit, currency }: {
 export function BookingExperience({ vehicle, locale }: { vehicle: VehicleListItem; locale: Locale }) {
   const [rental, setRental] = useRental();
   const [step, setStep] = React.useState(0);
+  const [direction, setDirection] = React.useState<1 | -1>(1);
   const [rulesAccepted, setRulesAccepted] = React.useState(false);
   const [startKey, setStartKey] = React.useState(() => toDateInput(new Date()));
   const [passportState, setPassportState] = React.useState<"idle" | "scanning" | "ready">("idle");
@@ -137,6 +139,7 @@ export function BookingExperience({ vehicle, locale }: { vehicle: VehicleListIte
   });
   const bookingAnchorRef = React.useRef<HTMLDivElement>(null);
   const previousStepRef = React.useRef(step);
+  const reduceMotion = useReducedMotion();
 
   const q = quote(vehicle, rental.days);
   const total = q?.total ?? 0;
@@ -149,10 +152,15 @@ export function BookingExperience({ vehicle, locale }: { vehicle: VehicleListIte
   const canContinue = [rulesAccepted, true, Boolean(startKey), passportState === "ready", true, depositAccepted, true][step] ?? true;
   const next = () => {
     if (!canContinue) return;
-    if (step < steps.length - 1) setStep((current) => current + 1);
-    else setContract(true);
+    if (step < steps.length - 1) {
+      setDirection(1);
+      setStep((current) => current + 1);
+    } else setContract(true);
   };
-  const previous = () => setStep((current) => Math.max(0, current - 1));
+  const previous = () => {
+    setDirection(-1);
+    setStep((current) => Math.max(0, current - 1));
+  };
   const updateClient = (key: keyof typeof client) => (value: string) => setClient((current) => ({ ...current, [key]: value }));
   const startPassportDemo = () => {
     setPassportState("scanning");
@@ -166,8 +174,8 @@ export function BookingExperience({ vehicle, locale }: { vehicle: VehicleListIte
     const anchor = bookingAnchorRef.current;
     if (!anchor) return;
     const top = anchor.getBoundingClientRect().top + window.scrollY - 64;
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    window.scrollTo({ top: Math.max(0, top), behavior: reduceMotion ? "auto" : "smooth" });
+    const reduceScrollMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.max(0, top), behavior: reduceScrollMotion ? "auto" : "smooth" });
   }, [step]);
 
   if (contract) {
@@ -188,6 +196,10 @@ export function BookingExperience({ vehicle, locale }: { vehicle: VehicleListIte
     <ReviewStep key="review" vehicle={vehicle} days={rental.days} startDate={startDate} total={total} deposit={deposit} currency={currency} />,
   ][step];
 
+  const enterX = reduceMotion ? 0 : direction * 18;
+  const exitX = reduceMotion ? 0 : direction * -12;
+  const transition = { duration: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] as const };
+
   return (
     <div className="mx-auto max-w-[1080px] px-4 pb-16 pt-6 sm:pt-10">
       <div className="mb-6 flex items-center justify-between gap-4">
@@ -206,13 +218,26 @@ export function BookingExperience({ vehicle, locale }: { vehicle: VehicleListIte
             {steps.map((title, index) => {
               const active = index === step;
               const complete = index < step;
-              return <li key={title} className="shrink-0 lg:flex lg:items-center lg:gap-2.5"><span className="inline-flex h-7 w-7 items-center justify-center text-[12px] font-600" style={{ borderRadius: 999, background: active ? t.dark : complete ? t.yellow : t.surfaceSunken, color: active ? "#fff" : t.text }}>{complete ? "✓" : index + 1}</span><span className="ml-1.5 text-[13px] lg:ml-0" style={{ color: active ? t.text : t.muted }}>{title}</span></li>;
+              return <li key={title} className="shrink-0 lg:flex lg:items-center lg:gap-2.5"><span className="inline-flex h-7 w-7 items-center justify-center text-[12px] font-600 transition-colors duration-200" style={{ borderRadius: 999, background: active ? t.dark : complete ? t.yellow : t.surfaceSunken, color: active ? "#fff" : t.text }}>{complete ? "✓" : index + 1}</span><span className="ml-1.5 text-[13px] transition-colors duration-200 lg:ml-0" style={{ color: active ? t.text : t.muted }}>{title}</span></li>;
             })}
           </ol>
         </aside>
         <main>
-          <div className="mb-5 flex items-center justify-between"><div><p className="text-[12px] font-600 uppercase tracking-[.1em]" style={{ color: t.faint }}>Шаг {step + 1} из {steps.length}</p><h1 className="mt-1 text-[28px] font-600 tracking-[-.025em]">{steps[step]}</h1></div><span className="text-[13px]" style={{ color: t.muted }}>{displayName(vehicle)}</span></div>
-          <Card className="p-4 sm:p-6">{content}</Card>
+          <motion.div layout transition={{ layout: { duration: reduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] } }}>
+            <AnimatePresence initial={false} mode="popLayout" custom={direction}>
+              <motion.div
+                key={step}
+                custom={direction}
+                initial={{ opacity: reduceMotion ? 1 : 0, x: enterX, filter: reduceMotion ? "none" : "blur(2px)" }}
+                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                exit={{ opacity: reduceMotion ? 1 : 0, x: exitX, filter: reduceMotion ? "none" : "blur(1.5px)" }}
+                transition={transition}
+              >
+                <div className="mb-5 flex items-center justify-between"><div><p className="text-[12px] font-600 uppercase tracking-[.1em]" style={{ color: t.faint }}>Шаг {step + 1} из {steps.length}</p><h1 className="mt-1 text-[28px] font-600 tracking-[-.025em]">{steps[step]}</h1></div><span className="text-[13px]" style={{ color: t.muted }}>{displayName(vehicle)}</span></div>
+                <Card className="p-4 sm:p-6">{content}</Card>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
           <div className="mt-4 flex items-center justify-between gap-3">
             {step > 0 ? <Pressable onClick={previous} className="min-h-11 px-4 text-[14px] font-500" style={{ border: `1px solid ${t.borderStrong}`, borderRadius: r.button }}>Назад</Pressable> : <span />}
             <Pressable onClick={next} disabled={!canContinue} className="min-h-11 px-5 text-[14px] font-600 disabled:cursor-not-allowed disabled:opacity-40" style={{ background: t.yellow, color: t.text, borderRadius: r.button }}>{step === steps.length - 1 ? "Оформить договор" : "Далее"}</Pressable>
